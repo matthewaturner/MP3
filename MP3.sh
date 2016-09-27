@@ -49,7 +49,7 @@ while true; do
 	awk '{print "EIP / KSTKEIP:\t" $30}' /proc/$PID/stat	#EIP / Instruction Pointer / kstkeip
 	
 	# Resources
-	printf "NUMBER OF FDS USED:\t\t"; cd /proc/$PID/fd; lsof | wc -l;										# Number of allocated file handles - Not sure if this is what they wanted on this one.
+	awk '/^FDSize/ {print "FDSIZE:\t" $2}' /proc/$PID/status												# FDSize - Number of allocated file handles
 	awk '/^voluntary_ctxt_switches/ {print "VOLUNTARY CONTEXT SWITCHES:\t" $2}' /proc/$PID/status			#voluntary_ctxt_switches / Voluntary Context Switches
 	awk '/^nonvoluntary_ctxt_switches/ {print "NONVOLUNTARY CONTEXT SWITCHES:\t" $2}' /proc/$PID/status		#nonvoluntary_ctxt_switches / Nonvoluntary Context Switches
 	
