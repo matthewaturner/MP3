@@ -2,6 +2,7 @@
 
 PID="0"
 re='^[0-9]+$' # Regex for number type checking
+path = pwd;
 
 while true; do
   printf "Enter your PID\n['q' for quit]: "; read PID;
@@ -57,13 +58,17 @@ while true; do
 	awk '/^Cpus_allowed_list/ {$1 = ""; print "ALLOWED PROCESSORS:\t" $0 }' /proc/$PID/status	#Cpus_allowed_list - Allowed Processors
 	awk '{print "LAST USED PROCESSOR:\t" $39}' /proc/$PID/stat									#processor - Last Used Processor
 	
-	# Memory Map - MUST OUTPUT FILE CONTAINING THIS INFORMATION - Have yet to output info
+	# Memory Map - MUST OUTPUT FILE CONTAINING THIS INFORMATION
 		# Address Range
 		# permissions
 		# offset
 		# dev
 		# inode
 		# path name
+	
+	# Puts the PID's memory map contents into a file "pwd" in the directory where MP3.sh is running.
+	# I think this is what they want, not 100% sure. I would double check.
+	cat /proc/$PID/maps > pwd
 	
 	printf "\n"
   fi
