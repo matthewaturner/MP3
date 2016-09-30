@@ -2,7 +2,6 @@
 
 PID="0"
 re='^[0-9]+$' # Regex for number type checking
-path = pwd;
 
 while true; do
   printf "Enter your PID\n['q' for quit]: "; read PID;
@@ -50,7 +49,7 @@ while true; do
 	awk '{print "EIP / KSTKEIP:\t" $30}' /proc/$PID/stat	#EIP / Instruction Pointer / kstkeip
 	
 	# Resources
-	awk '/^FDSize/ {print "FDSIZE:\t" $2}' /proc/$PID/status												# FDSize - Number of allocated file handles
+	awk '/^FDSize/ {print "FDSIZE:\t" $2}' /proc/$PID/status												# FDSize - Number of allocated file handles / File handle count
 	awk '/^voluntary_ctxt_switches/ {print "VOLUNTARY CONTEXT SWITCHES:\t" $2}' /proc/$PID/status			#voluntary_ctxt_switches / Voluntary Context Switches
 	awk '/^nonvoluntary_ctxt_switches/ {print "NONVOLUNTARY CONTEXT SWITCHES:\t" $2}' /proc/$PID/status		#nonvoluntary_ctxt_switches / Nonvoluntary Context Switches
 	
@@ -66,9 +65,9 @@ while true; do
 		# inode
 		# path name
 	
-	# Puts the PID's memory map contents into a file "pwd" in the directory where MP3.sh is running.
-	# I think this is what they want, not 100% sure. I would double check.
-	cat /proc/$PID/maps > pwd
+	# Puts the PID's memory map contents into a file $PID.txt in the directory where MP3.sh is running.
+	# Needs an error message if can't access map file --!!
+	cat /proc/$PID/maps > $PID.txt
 	
 	printf "\n"
   fi
